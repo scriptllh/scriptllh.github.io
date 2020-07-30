@@ -6,19 +6,10 @@
     <description>Recent content in lua on scriptllh blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 06 Feb 2018 16:01:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Feb 2018 15:01:23 +0800</lastBuildDate>
     
 	<atom:link href="/categories/lua/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>lua-openresty (3)</title>
-      <link>/post/lua-openresty-3/</link>
-      <pubDate>Tue, 06 Feb 2018 16:01:23 +0800</pubDate>
-      
-      <guid>/post/lua-openresty-3/</guid>
-      <description>元表（类似操作符重载） OpenResty 最佳实践 Lua 提供的所有操作符都可以被重载： 元方法 含义 &amp;ldquo;add&amp;rdquo; + 操作 &amp;ldquo;sub&amp;rdquo; - 操作 其行为类似于 &amp;ldquo;add&amp;rdquo; 操作 &amp;ldquo;mul&amp;rdquo; * 操作 其行为类似于 &amp;ldquo;add&amp;rdquo; 操作 &amp;ldquo;div&amp;rdquo; / 操</description>
-    </item>
     
     <item>
       <title>lua-openresty (2)</title>

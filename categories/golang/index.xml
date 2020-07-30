@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>golang性能调优实践</title>
+      <link>/post/lsm/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/post/lsm/</guid>
+      <description>数据分析 top数据分析 总采样数27 flat=&amp;gt;在27次中25次该函数都出现了 flat%=&amp;gt; 25&amp;frasl;27 = 92.59% Sum% =&amp;gt; 92.59% + 3.7% = 96.3% Cum =&amp;gt; 在27次中有25次都出现了run</description>
+    </item>
+    
+    <item>
       <title>GO TCP 连接</title>
       <link>/post/go-tcp-%E8%BF%9E%E6%8E%A5/</link>
       <pubDate>Tue, 05 Mar 2019 16:01:23 +0800</pubDate>

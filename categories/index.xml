@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on scriptllh blog</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on scriptllh blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Mar 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang</title>
+      <link>/categories/golang/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mqtt</title>
+      <link>/categories/mqtt/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/mqtt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>协议</title>
+      <link>/categories/%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/%E5%8D%8F%E8%AE%AE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>/categories/nginx/</link>
+      <pubDate>Sun, 05 Aug 2018 15:01:23 +0800</pubDate>
+      
+      <guid>/categories/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>/categories/redis/</link>
+      <pubDate>Tue, 05 Jun 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>杂谈</title>
+      <link>/categories/%E6%9D%82%E8%B0%88/</link>
+      <pubDate>Sun, 03 Jun 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/%E6%9D%82%E8%B0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cassandra</title>
+      <link>/categories/cassandra/</link>
+      <pubDate>Thu, 03 May 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/cassandra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lua</title>
+      <link>/categories/lua/</link>
+      <pubDate>Tue, 06 Feb 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/categories/lua/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

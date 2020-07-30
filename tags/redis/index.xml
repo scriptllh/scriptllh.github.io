@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redis on scriptllh blog</title>
+    <link>/tags/redis/</link>
+    <description>Recent content in redis on scriptllh blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 05 Jun 2018 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>redis事务</title>
+      <link>/post/redis%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Tue, 05 Jun 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/post/redis%E4%BA%8B%E5%8A%A1/</guid>
+      <description>事务 redis 的命令是一组命令的集合 redis 保证了一个事务中的所有命令要么执行，要么不执行，如果发送Exec命令前客户端断线了，则redis会清空事务队列</description>
+    </item>
+    
+  </channel>
+</rss>

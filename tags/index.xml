@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on scriptllh blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on scriptllh blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Mar 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>golang</title>
+      <link>/tags/golang/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mqtt</title>
+      <link>/tags/mqtt/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/mqtt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>协议</title>
+      <link>/tags/%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/%E5%8D%8F%E8%AE%AE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nginx</title>
+      <link>/tags/nginx/</link>
+      <pubDate>Sun, 05 Aug 2018 15:01:23 +0800</pubDate>
+      
+      <guid>/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>/tags/redis/</link>
+      <pubDate>Tue, 05 Jun 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>杂谈</title>
+      <link>/tags/%E6%9D%82%E8%B0%88/</link>
+      <pubDate>Sun, 03 Jun 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/%E6%9D%82%E8%B0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cassandra</title>
+      <link>/tags/cassandra/</link>
+      <pubDate>Thu, 03 May 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/cassandra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tool</title>
+      <link>/tags/tool/</link>
+      <pubDate>Fri, 02 Mar 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/tool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lua</title>
+      <link>/tags/lua/</link>
+      <pubDate>Tue, 06 Feb 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/tags/lua/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>lua-openresty (3) - scriptllh blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="scriptllh" /><meta name="description" content="元表（类似操作符重载） OpenResty 最佳实践 Lua 提供的所有操作符都可以被重载： 元方法 含义 &amp;ldquo;add&amp;rdquo; &#43; 操作 &amp;ldquo;sub&amp;rdquo; - 操作 其行为类似于 &amp;ldquo;add&amp;rdquo; 操作 &amp;ldquo;mul&amp;rdquo; * 操作 其行为类似于 &amp;ldquo;add&amp;rdquo; 操作 &amp;ldquo;div&amp;rdquo; / 操" /><meta name="keywords" content="scriptllh, Scriptllh, blog" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="/post/lua-openresty-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="lua-openresty (3)" />
+<meta property="og:description" content="元表（类似操作符重载） OpenResty 最佳实践 Lua 提供的所有操作符都可以被重载： 元方法 含义 &ldquo;add&rdquo; &#43; 操作 &ldquo;sub&rdquo; - 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;mul&rdquo; * 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;div&rdquo; / 操" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/lua-openresty-3/" />
+<meta property="article:published_time" content="2018-02-06T16:01:23&#43;08:00"/>
+<meta property="article:modified_time" content="2018-02-06T16:01:23&#43;08:00"/>
+
+<meta itemprop="name" content="lua-openresty (3)">
+<meta itemprop="description" content="元表（类似操作符重载） OpenResty 最佳实践 Lua 提供的所有操作符都可以被重载： 元方法 含义 &ldquo;add&rdquo; &#43; 操作 &ldquo;sub&rdquo; - 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;mul&rdquo; * 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;div&rdquo; / 操">
+
+
+<meta itemprop="datePublished" content="2018-02-06T16:01:23&#43;08:00" />
+<meta itemprop="dateModified" content="2018-02-06T16:01:23&#43;08:00" />
+<meta itemprop="wordCount" content="746">
+
+
+
+<meta itemprop="keywords" content="lua," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="lua-openresty (3)"/>
+<meta name="twitter:description" content="元表（类似操作符重载） OpenResty 最佳实践 Lua 提供的所有操作符都可以被重载： 元方法 含义 &ldquo;add&rdquo; &#43; 操作 &ldquo;sub&rdquo; - 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;mul&rdquo; * 操作 其行为类似于 &ldquo;add&rdquo; 操作 &ldquo;div&rdquo; / 操"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Scriptllh</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Scriptllh</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">lua-openresty (3)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-02-06 </span>
+        <div class="post-category">
+            <a href="/categories/lua/"> lua </a>
+            </div>
+          <span class="more-meta"> 约 746 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#元表-类似操作符重载">元表（类似操作符重载）</a>
+<ul>
+<li>
+<ul>
+<li><a href="#lua-提供的所有操作符都可以被重载">Lua 提供的所有操作符都可以被重载：</a></li>
+<li><a href="#除了操作符之外-如下元方法也可以被重载-下面会依次解释使用方法">除了操作符之外，如下元方法也可以被重载，下面会依次解释使用方法：</a></li>
+<li><a href="#index-元方法">__index 元方法</a></li>
+<li><a href="#call-元方法">__call 元方法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#面向对象编程">面向对象编程</a>
+<ul>
+<li>
+<ul>
+<li><a href="#类">类</a></li>
+<li><a href="#继承">继承</a></li>
+<li><a href="#判断为空">判断为空</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h3 id="元表-类似操作符重载">元表（类似操作符重载）</h3>
+
+<p><a href="https://moonbingbing.gitbooks.io/openresty-best-practices/content/" title="title text">OpenResty 最佳实践</a></p>
+
+<h5 id="lua-提供的所有操作符都可以被重载">Lua 提供的所有操作符都可以被重载：</h5>
+
+<p>元方法 含义
+&ldquo;<strong>add&rdquo; + 操作
+&ldquo;</strong>sub&rdquo; - 操作 其行为类似于 &ldquo;add&rdquo; 操作
+&ldquo;<strong>mul&rdquo; * 操作 其行为类似于 &ldquo;add&rdquo; 操作
+&ldquo;</strong>div&rdquo; / 操作 其行为类似于 &ldquo;add&rdquo; 操作
+&ldquo;<strong>mod&rdquo; % 操作 其行为类似于 &ldquo;add&rdquo; 操作
+&ldquo;</strong>pow&rdquo; ^ （幂）操作 其行为类似于 &ldquo;add&rdquo; 操作
+&ldquo;<strong>unm&rdquo; 一元 - 操作
+&ldquo;</strong>concat&rdquo;  .. （字符串连接）操作
+&ldquo;<strong>len&rdquo; # 操作
+&ldquo;</strong>eq&rdquo;  == 操作 函数 getcomphandler 定义了 Lua 怎样选择一个处理器来作比较操作 仅在两个对象类型相同且有对应操作相同的元方法时才起效
+&ldquo;<strong>lt&rdquo;  &lt; 操作
+&ldquo;</strong>le&rdquo;  &lt;= 操作</p>
+
+<h5 id="除了操作符之外-如下元方法也可以被重载-下面会依次解释使用方法">除了操作符之外，如下元方法也可以被重载，下面会依次解释使用方法：</h5>
+
+<p>元方法 含义
+&ldquo;<strong>index&rdquo;   取下标操作用于访问 table[key]
+&ldquo;</strong>newindex&rdquo;    赋值给指定下标 table[key] = value
+&ldquo;<strong>tostring&rdquo;    转换成字符串
+&ldquo;</strong>call&rdquo;    当 Lua 调用一个值时调用
+&ldquo;<strong>mode&rdquo;    用于弱表(week table)
+&ldquo;</strong>metatable&rdquo;   用于保护metatable不被访问</p>
+
+<h5 id="index-元方法">__index 元方法</h5>
+
+<p>下面的例子中，我们实现了在表中查找键不存在时转而在元表中查找该键的功能：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">mytable = setmetatable({key1 = &#34;value1&#34;},   --原始表
+  {__index = function(self, key)            --重载函数
+    if key == &#34;key2&#34; then
+      return &#34;metatablevalue&#34;
+    end
+  end
+})
+
+print(mytable.key1,mytable.key2)  --&gt; output：value1 metatablevalue
+关于 __index 元方法，有很多比较高阶的技巧，例如：__index 的元方法不需要非是一个函数，他也可以是一个表。
+t = setmetatable({[1] = &#34;hello&#34;}, {__index = {[2] = &#34;world&#34;}})
+print(t[1], t[2])   --&gt;hello world</pre></td></tr></table>
+</div>
+</div>
+<h5 id="call-元方法">__call 元方法</h5>
+
+<p>__call 元方法的功能类似于 C++ 中的仿函数，使得普通的表也可以被调用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">functor = {}
+function func1(self, arg)
+  print (&#34;called from&#34;, arg)
+end
+
+setmetatable(functor, {__call = func1})
+
+functor(&#34;functor&#34;)  --&gt; called from functor
+print(functor)      --&gt; output：0x00076fc8 （后面这串数字可能不一样）</pre></td></tr></table>
+</div>
+</div>
+<h3 id="面向对象编程">面向对象编程</h3>
+
+<hr />
+
+<h5 id="类">类</h5>
+
+<p>account.lua</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">local _M = {}
+
+local mt = { __index = _M }
+
+function _M.deposit (self, v)
+    self.balance = self.balance + v
+end
+
+function _M.withdraw (self, v)
+    if self.balance &gt; v then
+        self.balance = self.balance - v
+    else
+        error(&#34;insufficient funds&#34;)
+    end
+end
+
+function _M.new (self, balance)
+    balance = balance or 0
+    return setmetatable({balance = balance}, mt)
+end
+
+return _M</pre></td></tr></table>
+</div>
+</div>
+<p>引用代码示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">local account = require(&#34;account&#34;)
+
+local a = account:new()
+a:deposit(100)
+
+local b = account:new()
+b:deposit(50)
+
+print(a.balance)  --&gt; output: 100
+print(b.balance)  --&gt; output: 50</pre></td></tr></table>
+</div>
+</div>
+<h5 id="继承">继承</h5>
+
+<h5 id="判断为空">判断为空</h5>
+
+<p>因此，我们要判断一个 table 是否为 {}，不能采用 #table == 0 的方式来判断。可以用下面这样的方法来判断：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> function isTableEmpty(t)
+    return t == nil or next(t) == nil
+end</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">scriptllh</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2018-02-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/lua/">lua</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/%E8%AE%B0mac-%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">记mac 迁移操作</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/lua-openresty-2/">
+            <span class="next-text nav-default">lua-openresty (2)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        id: '2018-02-06 16:01:23 \x2b0800 CST',
+        title: 'lua-openresty (3)',
+        clientID: '7255eba3b5f91c302b41',
+        clientSecret: '31c508d4c539120334fb380e2f22237c4ad2459c',
+        repo: 'scriptllh.github.io',
+        owner: 'scriptllh',
+        admin: ['scriptllh'],
+        body: decodeURI(location.href)
+      });
+      gitalk.render('gitalk-container');
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by gitalk.</a></noscript>
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="lin_hua_li@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/scriptllh" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">scriptllh</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

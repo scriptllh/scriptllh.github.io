@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mqtt on scriptllh blog</title>
+    <link>/tags/mqtt/</link>
+    <description>Recent content in mqtt on scriptllh blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Mar 2019 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/mqtt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MQTT(消息队列遥测传输协议)</title>
+      <link>/post/mqtt%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%81%A5%E6%B5%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Wed, 06 Mar 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/post/mqtt%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E9%81%A5%E6%B5%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</guid>
+      <description>优点 可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务。作为一种低开销、低带宽占用的即时通讯协议，使其在物联网、小型设备、移</description>
+    </item>
+    
+  </channel>
+</rss>

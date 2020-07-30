@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cassandra on scriptllh blog</title>
+    <link>/categories/cassandra/</link>
+    <description>Recent content in cassandra on scriptllh blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 03 May 2018 16:01:23 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/cassandra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>cassandra分布式搭建</title>
+      <link>/post/cassandra%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Thu, 03 May 2018 16:01:23 +0800</pubDate>
+      
+      <guid>/post/cassandra%E5%88%86%E5%B8%83%E5%BC%8F%E6%90%AD%E5%BB%BA/</guid>
+      <description>安装Java 下载jdk-8u171-linux-x64.tar 解压 配置环境变量 vi /etc/profile vi .bashrc 在文件末尾加入如下代码（根据自己路径做一定的更改） 1 2</description>
+    </item>
+    
+  </channel>
+</rss>
